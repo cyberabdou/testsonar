@@ -46,4 +46,22 @@ jobs:
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: '**/*.trx' 
-      
+      - task: SonarQubePrepare@5
+        inputs:
+          SonarQube: 'SonarQube COnnection'
+          scannerMode: 'CLI'
+          configMode: 'manual'
+          cliProjectKey: 'testsonar'
+          cliProjectName: 'Test Sonar'
+          cliSources: '.'
+          - task: SonarQubeAnalyze@5
+            inputs:
+              jdkversion: 'JAVA_HOME_11_X64'
+      - task: dependency-check-build-task@6
+        inputs:
+          projectName: 'Test Sonar'
+          scanPath: '/'
+          format: 'HTML, JSON, JUNIT'
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
