@@ -46,6 +46,7 @@ jobs:
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: '**/*.trx' 
+      Settings
       - task: SonarQubePrepare@5
         inputs:
           SonarQube: 'SonarQube COnnection'
